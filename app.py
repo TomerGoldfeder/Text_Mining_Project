@@ -128,7 +128,6 @@ def get_stats():
 @app.route("/stats_view")
 def build_stats_view():
     return render_template("stats_view.html")
-    #return messages
 
 
 @app.route("/get")
@@ -137,13 +136,18 @@ def get_bot_response():
 
     if user_text in ["show stats","show statistics"]:
         return redirect(url_for('.build_stats_view'))
-        #return_text = print_stats()
     else:
         typo_or_not, corrections = check_typo(user_text)
-        which_emotion = check_emotion(user_text)
-        return_text = "You feel {} about this<br>".format(get_emotion_response(which_emotion))
+        return_text = ""
         if typo_or_not != "No typo in tweet":
+            for cor in corrections:
+                user_text = user_text.replace(cor['org_word'], cor['cor_word'])
+            which_emotion = check_emotion(user_text)
+            return_text += "You feel {} about this<br>".format(get_emotion_response(which_emotion))
             return_text += typo_or_not
+        else:
+            which_emotion = check_emotion(user_text)
+            return_text += "You feel {} about this<br>".format(get_emotion_response(which_emotion))
 
         write_to_json(which_emotion, corrections)
 
