@@ -58,11 +58,11 @@
             // configure labels
             chart.labels().format(function() {
               var heat = (this.heat);
-              if (heat < 20)
+              if (heat < 3)
                 return "Low<br/>" + heat + "%";
-              if (heat < 40)
+              if (heat < 5)
                 return "Medium<br/>" + heat + "%";
-              if (heat >= 40)
+              if (heat >= 5)
                 return "<span style='font-weight:bold'>High</span><br/>" +
                        heat + "%";
             });
@@ -70,19 +70,19 @@
             // configure tooltips
             chart.tooltip().format(function() {
               var heat = (this.heat);
-              if (heat < 20)
+              if (heat < 3)
                 return this.y + ": Low (" + heat + "%)"
-              if (heat < 40)
+              if (heat < 5)
                 return this.y + ": Medium (" + heat + "%)"
-              if (heat >= 40)
+              if (heat >= 5)
                 return this.y + ": High (" + heat + "%)"
             });
 
             var customColorScale = anychart.scales.ordinalColor();
             customColorScale.ranges([
-              {less: 20},
-              {from: 20, to: 40},
-              {greater: 40}
+              {less: 3},
+              {from: 3, to: 5},
+              {greater: 5}
             ]);
             customColorScale.colors(["lightblue", "green", "red"]);
 
