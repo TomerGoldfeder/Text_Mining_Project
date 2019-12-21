@@ -1,0 +1,1 @@
+{"stats": {"anger": {"Delete": 0, "Insertion": 0, "Replace": 0, "Transpose": 0}, "happiness": {"Delete": 0, "Insertion": 0, "Replace": 0, "Transpose": 0}, "neutral": {"Delete": 0, "Insertion": 3, "Replace": 2, "Transpose": 4}, "sadness": {"Delete": 0, "Insertion": 0, "Replace": 1, "Transpose": 0}, "surprise": {"Delete": 0, "Insertion": 0, "Replace": 0, "Transpose": 0}}}

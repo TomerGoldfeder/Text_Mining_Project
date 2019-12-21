@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--    <script src="https://cdn.anychart.com/releases/8.7.1/js/anychart-base.min.js"></script>-->
+    <script src="https://cdn.anychart.com/releases/8.7.1/js/anychart-core.min.js"></script>
+<!--    <script src="https://cdn.anychart.com/releases/8.7.1/js/anychart-bundle.min.js"></script>-->
+    <script src="https://cdn.anychart.com/releases/8.7.1/js/anychart-heatmap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+    <h1 align="center">Statistics</h1>
+    <div id="heatMap" style="height: 700px;">
+
+    </div>
+    <div>
+         <input id="chatbot" type="submit" value="Back To Chat">
+    </div>
+    <script>
+        $.get("/get_stats").done(function(data) {
+            console.log(data);
+            var _data = JSON.parse(data);
+
+            //              'anger' 'happiness' 'neutral' 'sadness' 'surprise'
+            // Delete         0         0           0         0         0
+            // Insertion      0         0           0         0         0
+            // Replace        0         0           0         0         0
+            // Transpose      0         0           0         0         0
+
+            var data1 = [
+              {x: "Anger", y: "Delete", heat: _data["anger"]["Delete"], custom_field: "info 1"},
+              {x: "Happiness", y: "Delete", heat: _data["happiness"]["Delete"], custom_field: "info 2"},
+              {x: "Neutral", y: "Delete", heat: _data["neutral"]["Delete"], custom_field: "info 3"},
+              {x: "Sadness", y: "Delete", heat: _data["sadness"]["Delete"], custom_field: "info 4"},
+              {x: "Surprise", y: "Delete", heat: _data["surprise"]["Delete"], custom_field: "info 4"},
+              {x: "Anger", y: "Insertion", heat: _data["anger"]["Insertion"], custom_field: "info 5"},
+              {x: "Happiness", y: "Insertion", heat: _data["happiness"]["Insertion"], custom_field: "info 6"},
+              {x: "Neutral", y: "Insertion", heat: _data["neutral"]["Insertion"], custom_field: "info 7"},
+              {x: "Sadness", y: "Insertion", heat: _data["sadness"]["Insertion"], custom_field: "info 8"},
+              {x: "Surprise", y: "Insertion", heat: _data["surprise"]["Insertion"], custom_field: "info 8"},
+              {x: "Anger", y: "Replace", heat: _data["anger"]["Replace"], custom_field: "info 9"},
+              {x: "Happiness", y: "Replace", heat: _data["happiness"]["Replace"], custom_field: "info 10"},
+              {x: "Neutral", y: "Replace", heat: _data["neutral"]["Replace"], custom_field: "info 11"},
+              {x: "Sadness", y: "Replace", heat: _data["sadness"]["Replace"], custom_field: "info 12"},
+              {x: "Surprise", y: "Replace", heat: _data["surprise"]["Replace"], custom_field: "info 12"},
+              {x: "Anger", y: "Transpose", heat: _data["anger"]["Transpose"], custom_field: "info 13"},
+              {x: "Happiness", y: "Transpose", heat: _data["happiness"]["Transpose"], custom_field: "info 14"},
+              {x: "Neutral", y: "Transpose", heat: _data["neutral"]["Transpose"], custom_field: "info 15"},
+              {x: "Sadness", y: "Transpose", heat: _data["sadness"]["Transpose"], custom_field: "info 16"},
+              {x: "Surprise", y: "Transpose", heat: _data["surprise"]["Transpose"], custom_field: "info 16"}
+            ];
+
+            // create a chart and set the data
+            var chart = anychart.heatMap(data1);
+
+            // enable HTML for labels
+            chart.labels().useHtml(true);
+
+            // configure labels
+            chart.labels().format(function() {
+              var heat = (this.heat);
+              if (heat < 20)
+                return "Low<br/>" + heat + "%";
+              if (heat < 40)
+                return "Medium<br/>" + heat + "%";
+              if (heat >= 40)
+                return "<span style='font-weight:bold'>High</span><br/>" +
+                       heat + "%";
+            });
+
+            // configure tooltips
+            chart.tooltip().format(function() {
+              var heat = (this.heat);
+              if (heat < 20)
+                return this.y + ": Low (" + heat + "%)"
+              if (heat < 40)
+                return this.y + ": Medium (" + heat + "%)"
+              if (heat >= 40)
+                return this.y + ": High (" + heat + "%)"
+            });
+
+            var customColorScale = anychart.scales.ordinalColor();
+            customColorScale.ranges([
+              {less: 20},
+              {from: 20, to: 40},
+              {greater: 40}
+            ]);
+            customColorScale.colors(["lightblue", "green", "red"]);
+
+            // set the color scale as the color scale of the chart
+            chart.colorScale(customColorScale);
+
+            chart.height(600);
+
+            chart.container("heatMap");
+            chart.draw();
+        });
+
+    </script>
+    <script>
+        $("#chatbot").click(function() {
+            window.location.replace("/");
+        })
+    </script>
+</body>
+</html>
