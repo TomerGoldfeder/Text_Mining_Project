@@ -25,12 +25,12 @@ def get_sentiment(arr):
     tweets[0] = tweets[0].apply(lambda x: " ".join([Word(word).lemmatize() for word in x.split()]))
 
     count_vect = CountVectorizer(analyzer='word')
-    save_classifier = open('./model/word_features.pickle', 'rb')
+    save_classifier = open('/Users/tg/PycharmProjects/text_mining_project/Text_Mining_Project/sentiment_analysis/model/word_features.pickle', 'rb')
     data_content = pickle.load(save_classifier)
     save_classifier.close()
     count_vect.fit(data_content)
 
-    save_classifier = open('./model/lsvm.pickle', 'rb')
+    save_classifier = open('/Users/tg/PycharmProjects/text_mining_project/Text_Mining_Project/sentiment_analysis/model/lsvm.pickle', 'rb')
     lsvm = pickle.load(save_classifier)
     save_classifier.close()
 

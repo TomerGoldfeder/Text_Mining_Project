@@ -1,85 +1,82 @@
-body
-{
-font-family: Garamond;
-background-color: white;
+body{
+    font-family: Garamond;
+    background-color: white;
 }
-h1
-{
-color: black;
-margin-bottom: 0;
-margin-top: 0;
-text-align: center;
-font-size: 40px;
+
+h1{
+    color: black;
+    margin-bottom: 0;
+    margin-top: 0;
+    text-align: center;
+    font-size: 40px;
 }
-h3
-{
-color: black;
-font-size: 20px;
-margin-top: 3px;
-text-align: center;
+h3{
+    color: black;
+    font-size: 20px;
+    margin-top: 3px;
+    text-align: center;
 }
-#chatbox
-{
-background-color: white;
-border: 1px solid black;
-margin-left: auto;
-margin-right: auto;
-width: 40%;
-margin-top: 60px;
+#chatbox{
+    background-color: white;
+    border: 1px solid black;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+    margin-top: 60px;
 }
 #userInput {
-margin-left: auto;
-margin-right: auto;
-width: 40%;
-margin-top: 60px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+    margin-top: 60px;
 }
 #textInput {
-width: 87%;
-border: none;
-border-bottom: 3px solid #009688;
-font-family: monospace;
-font-size: 17px;
+    width: 87%;
+    border: none;
+    border-bottom: 3px solid #009688;
+    font-family: monospace;
+    font-size: 17px;
 }
 #buttonInput {
-padding: 3px;
-font-family: monospace;
-font-size: 17px;
+    padding: 3px;
+    font-family: monospace;
+    font-size: 17px;
 }
 #clearInput{
-padding: 3px;
-font-family: monospace;
-font-size: 17px;
+    padding: 3px;
+    font-family: monospace;
+    font-size: 17px;
 }
 #stats{
-padding: 3px;
-font-family: helvetica, arial, sans-serif;
-font-size: 40px;
+    padding: 3px;
+    font-family: helvetica, arial, sans-serif;
+    font-size: 40px;
 }
 .userText {
-color: black;
-font-family: monospace;
-font-size: 17px;
-text-align: right;
-line-height: 30px;
+    color: black;
+    font-family: monospace;
+    font-size: 17px;
+    text-align: right;
+    line-height: 30px;
 }
 .userText span {
-padding: 10px;
-border-radius: 2px;
+    padding: 10px;
+    border-radius: 2px;
 }
 .botText {
-color: red;
-font-family: monospace;
-font-size: 17px;
-text-align: left;
-line-height: 30px;
+    color: red;
+    font-family: monospace;
+    font-size: 17px;
+    text-align: left;
+    line-height: 30px;
 }
 .botText span {
-padding: 10px;
-border-radius: 2px;
+    padding: 10px;
+    border-radius: 2px;
 }
 #tidbit {
-position:absolute;
-bottom:0;
-right:0;
-width: 300px;
+    position:absolute;
+    bottom:0;
+    right:0;
+    width: 300px;
 }
