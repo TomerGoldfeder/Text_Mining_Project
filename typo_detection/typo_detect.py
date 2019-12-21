@@ -29,7 +29,7 @@ def detect_typo(text):
         correct_word = spell(origin_word)
         if correct_word != origin_word:
             classified_mistake = check_classification(origin_word, correct_word)
-            print("Origin Word: {}\nCorrect Word: {}\nCorrection Type: {}\n\n".format(origin_word, correct_word, classified_mistake))
+            #print("Origin Word: {}\nCorrect Word: {}\nCorrection Type: {}\n\n".format(origin_word, correct_word, classified_mistake))
             corrections.append({
                 "org_word": origin_word,
                 "cor_word": correct_word,
