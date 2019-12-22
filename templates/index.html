@@ -4,11 +4,11 @@
         <link rel="stylesheet" type="text/css" href="/static/style.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     </head>
-    <body>
-        <h1>Tweet Chatbot Analyzer</h1>
+    <body style="background-color: #45B39D;">
+        <h1 style="font-family:verdana;">Tweet Chatbot Analyzer</h1>
         <div>
-            <div id="chatbox">
-                <p class="botText"><span>Hi! I'm tweet analyzer for emotions and typos.<br> type in a tweet....</span></p>
+            <div id="chatbox" style="border-radius: 15px;width:70%;">
+                <p class="botText"><span>Hi! I'm tweet analyzer for emotions and typos. type in a tweet....</span></p>
             </div>
             <div id="userInput">
                 <input id="textInput" type="text" name="msg" placeholder="Message">
@@ -16,23 +16,29 @@
 
             </div>
             <div align="center">
-                <input id="clearInput" type="submit" value="Clear">
-                <br><br><br><br><br><br>
+                <br><br><br><br>
                 <input id="stats" type="submit" value="Stats">
                 <br><br>
             </div>
             <script>
+
             function getBotResponse() {
                 var rawText = $("#textInput").val();
-                var userHtml = '<p class="userText"><span>' + rawText + '</span></p>';
-                $("#textInput").val("");
-                $("#chatbox").append(userHtml);
-                document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
-                $.get("/get", { msg: rawText }).done(function(data) {
-                    var botHtml = '<p class="botText"><span>' + data + '</span></p>';
-                    $("#chatbox").append(botHtml);
+                if (rawText == "clear") {
+                    document.getElementById("chatbox").innerHTML = '';
+                    $("#textInput").val("");
+                } else {
+                    var userHtml = '<p class="userText"><span>' + rawText + '</span></p>';
+                    $("#textInput").val("");
+                    $("#chatbox").append(userHtml);
                     document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
-                });
+                    $.get("/get", { msg: rawText }).done(function(data) {
+                        var botHtml = '<p class="botText"><span>' + data + '</span></p>';
+                        $("#chatbox").append(botHtml);
+                        document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
+                    });
+                }
+
             }
 
             $("#textInput").keypress(function(e) {
@@ -43,10 +49,6 @@
 
             $("#buttonInput").click(function() {
                 getBotResponse();
-            });
-
-            $("#clearInput").click(function() {
-                document.getElementById("chatbox").innerHTML = '';
             });
 
             $("#stats").click(function() {

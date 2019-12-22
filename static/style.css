@@ -1,14 +1,15 @@
 body{
     font-family: Garamond;
-    background-color: white;
 }
 
 h1{
     color: black;
+    background-color: #45B39D;
     margin-bottom: 0;
     margin-top: 0;
     text-align: center;
     font-size: 40px;
+    font-family:verdana;
 }
 h3{
     color: black;
@@ -18,10 +19,9 @@ h3{
 }
 #chatbox{
     background-color: white;
-    border: 1px solid black;
     margin-left: auto;
     margin-right: auto;
-    width: 40%;
+    width: auto;
     margin-top: 60px;
 }
 #userInput {
@@ -72,7 +72,7 @@ h3{
 }
 .botText span {
     padding: 10px;
-    border-radius: 2px;
+    border-radius: 10px;
 }
 #tidbit {
     position:absolute;

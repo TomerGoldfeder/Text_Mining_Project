@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, session, url_for
 from typo_detection.typo_detect import detect_typo
 from sentiment_analysis.sentiment_analysis import detect_sentiment
 import json
+import random
 app = Flask(__name__)
 
 typos_list = ['Delete', 'Insertion', 'Replace', 'Transpose']
@@ -17,21 +18,21 @@ def check_typo(user_text):
     if len(typo) == 0:
         st = "No typo in tweet"
     else:
-        deletes = ["{}, {}".format(x['org_word'], x['cor_word']) for x in typo if x['type'] == "Delete"]
-        inserts = ["{}, {}".format(x['org_word'], x['cor_word']) for x in typo if x['type'] == "Insertion"]
-        replaces = ["{}, {}".format(x['org_word'], x['cor_word']) for x in typo if x['type'] == "Replace"]
-        transposes = ["{}, {}".format(x['org_word'], x['cor_word']) for x in typo if x['type'] == "Transpose"]
+        deletes = ["({}, {})".format(x['org_word'], x['cor_word']) for x in typo if x['type'] == "Delete"]
+        inserts = ["({}, {})".format(x['org_word'], x['cor_word']) for x in typo if x['type'] == "Insertion"]
+        replaces = ["({}, {})".format(x['org_word'], x['cor_word']) for x in typo if x['type'] == "Replace"]
+        transposes = ["({}, {})".format(x['org_word'], x['cor_word']) for x in typo if x['type'] == "Transpose"]
 
-        st = "You had several ({}) mistakes in the tweet.<br>".format(
+        st = "&nbsp;But you made some ({}) mistakes in the tweet.<br>".format(
             len(deletes) + len(inserts) + len(replaces) + len(transposes))
         if len(deletes) > 0:
-            st += " Delete: {}<br>".format("<br>".join(deletes))
+            st += "&nbsp;Delete: {}<br>".format(", ".join(deletes))
         if len(inserts) > 0:
-            st += " Insertion: {}<br>".format("<br>".join(inserts))
+            st += "&nbsp;Insertion: {}<br>".format(", ".join(inserts))
         if len(replaces) > 0:
-            st += " Replace: {}<br>".format("<br>".join(replaces))
+            st += "&nbsp;Replace: {}<br>".format(", ".join(replaces))
         if len(transposes) > 0:
-            st += " Transpose: {}<br>".format("<br>".join(transposes))
+            st += "&nbsp;Transpose: {}<br>".format(", ".join(transposes))
 
     return st, typo
 
@@ -40,13 +41,6 @@ def check_emotion(user_text):
     prediction = detect_sentiment(user_text)
     return prediction[0]
 
-
-def get_emotion_response(emotion):
-    # emotions = ['anger', 'happiness', 'neutral', 'sadness', 'surprise']
-    if emotion in ['happiness', 'sadness']:
-        return "happy" if emotion == "happiness" else "sad"
-    else:
-        return emotion
 
 def write_to_json(emotion, corrections):
     '''
@@ -130,6 +124,18 @@ def build_stats_view():
     return render_template("stats_view.html")
 
 
+def get_proper_emotion_response(emotion):
+    random_response = random.randint(0, 1)
+    responses = {
+        "anger": ["I feel you... this is very annoying", "This is very frustrating!"],
+        "happiness": ["I'm happy for you! :)", "Awesome!!"],
+        "neutral": ["Good.", "Ok."],
+        "sadness": ["Oh, I'm sorry", "This sounds so sad.."],
+        "surprise": ["Wowww!", "Really??"]
+    }
+    return responses[emotion][random_response] + ", emotion {} detected (for presentation only)<br>".format(emotion)
+
+
 @app.route("/get")
 def get_bot_response():
     user_text = request.args.get('msg')
@@ -143,11 +149,11 @@ def get_bot_response():
             for cor in corrections:
                 user_text = user_text.replace(cor['org_word'], cor['cor_word'])
             which_emotion = check_emotion(user_text)
-            return_text += "You feel {} about this<br>".format(get_emotion_response(which_emotion))
+            return_text += get_proper_emotion_response(which_emotion)
             return_text += typo_or_not
         else:
             which_emotion = check_emotion(user_text)
-            return_text += "You feel {} about this<br>".format(get_emotion_response(which_emotion))
+            return_text += get_proper_emotion_response(which_emotion)
 
         write_to_json(which_emotion, corrections)
 
