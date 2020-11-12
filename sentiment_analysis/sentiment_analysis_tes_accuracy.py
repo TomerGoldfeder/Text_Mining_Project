@@ -44,9 +44,9 @@ freq = pd.Series(' '.join(data['content']).split()).value_counts()[-10000:]
 freq = list(freq.index)
 data['content'] = data['content'].apply(lambda x: " ".join(x for x in x.split() if x not in freq))
 
-# save_word_features = open("./model/word_features.pickle", "wb")
-# pickle.dump(data['content'], save_word_features)
-# save_word_features.close()
+save_word_features = open("./model/word_features.pickle", "wb")
+pickle.dump(data['content'], save_word_features)
+save_word_features.close()
 
 labels_encode = preprocessing.LabelEncoder()
 y = labels_encode.fit_transform(data.sentiment.values)
