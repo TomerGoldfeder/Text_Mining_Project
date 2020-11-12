@@ -14,23 +14,17 @@ def sentent_vectorizer(prediction):
 def get_sentiment(arr):
     tweets = pd.DataFrame(arr)
 
-    # This is quite depressing. I am filled with sorrow - sadness 3
-    # I am beginning to think sun blcok is a haox. - anger 0
-    # I dont understand why he's doing this - surprise 4
-    # Raining...  I missed the rain so much...  I am grateful for it ;) - happiness 1
-    # neutral 2
-
     tweets[0] = tweets[0].str.replace('[^\w\s]', ' ')
     tweets[0] = tweets[0].apply(lambda x: " ".join(x for x in x.split() if x not in stop))
     tweets[0] = tweets[0].apply(lambda x: " ".join([Word(word).lemmatize() for word in x.split()]))
 
     count_vect = CountVectorizer(analyzer='word')
-    save_classifier = open('/Users/tg/PycharmProjects/text_mining_project/Text_Mining_Project/sentiment_analysis/model/word_features.pickle', 'rb')
+    save_classifier = open('./model/word_features.pickle', 'rb')
     data_content = pickle.load(save_classifier)
     save_classifier.close()
     count_vect.fit(data_content)
 
-    save_classifier = open('/Users/tg/PycharmProjects/text_mining_project/Text_Mining_Project/sentiment_analysis/model/lsvm.pickle', 'rb')
+    save_classifier = open('./model/lsvm.pickle', 'rb')
     lsvm = pickle.load(save_classifier)
     save_classifier.close()
 
