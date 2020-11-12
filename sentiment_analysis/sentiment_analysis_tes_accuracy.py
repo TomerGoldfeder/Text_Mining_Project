@@ -74,53 +74,8 @@ print("starting...")
 lsvm = SGDClassifier(alpha=0.001, random_state=5, max_iter=15, tol=None)
 lsvm.fit(X_train_count, y_train)
 
-# save_classifier = open('./model/lsvm.pickle', 'wb')
-# pickle.dump(lsvm, save_classifier)
-# save_classifier.close()
-
-tweets = pd.DataFrame(['I am very happy today! The atmosphere looks cheerful',
-                       'Things are looking great. It was such a good day',
-                       'Success is right around the corner. Lets celebrate this victory',
-                       'Everything is more beautiful when you experience them with a smile!',
-                       'Now this is my worst, okay? But I am gonna get better.',
-                       'I am tired, boss. Tired of being on the road, lonely as a sparrow in the rain',
-                       'I am tired of all the pain I feel',
-                       'This is quite depressing. I am filled with sorrow',
-                       'His death broke my heart. It was a sad day',
-                       'This is so annoying!!', 'I am beginning to think sun block is a hoax.',
-                       "I do not understand why he is doing this",
-                       'Where are you?', 'How sad that she would be too proud to have fun',
-                       'Lana felt for the quiet woman as she fell in to a sad silence',
-                       'It was real sad how Annie ended up.',
-                       'He felt sad and depressed.',
-                       'This day sucks!'
-                       ])
-
-# This is quite depressing. I am filled with sorrow - sadness 3
-# I am beginning to think sun blcok is a haox. - anger 0
-# I dont understand why he's doing this - surprise 4
-# Raining...  I missed the rain so much...  I am grateful for it ;) - happiness 1
-# neutral 2
-
-labels = [1, 1, 1, 1, 3, 3, 3, 3, 3, 0, 0, 4, 2, 3, 3, 3, 3, 3]
-
-tweets[0] = tweets[0].str.replace('[^\w\s]', ' ')
-tweets[0] = tweets[0].apply(lambda x: " ".join(x for x in x.split() if x not in stop))
-tweets[0] = tweets[0].apply(lambda x: " ".join([Word(word).lemmatize() for word in x.split()]))
-
-tweet_count = count_vect.transform(tweets[0])
-tweet_pred = lsvm.predict(tweet_count)
-correct_tweet_analysis = 0
-incorrect_tweet_analysis = 0
-
-for i in range(len(tweet_pred)):
-    if tweet_pred[i] == labels[i]:
-        correct_tweet_analysis += 1
-        print("Correct: {}, prediction: {}".format(i, tweet_pred[i]))
-    else:
-        print("Incorrect: {}, prediction: {}, true: {}".format(i, tweet_pred[i], labels[i]))
-        incorrect_tweet_analysis += 1
-
-print("\naccuracy: {}".format(correct_tweet_analysis/len(tweet_pred)))
+save_classifier = open('./model/lsvm.pickle', 'wb')
+pickle.dump(lsvm, save_classifier)
+save_classifier.close()
 
 
